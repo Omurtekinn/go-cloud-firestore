@@ -39,6 +39,21 @@ func main()  {
 		log.Fatalf("Failed adding club: %v", err)
 	}
 
+
+	// condition data.
+
+	mostClub:=client.Collection("Football").Where("Club","==","Galatasaray").Documents(context.Background())
+	for {
+		doc, err := mostClub.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			log.Fatalf("Failed to iterate: %v", err)
+		}
+		fmt.Println(doc.Data())
+	}
+
 	defer client.Close()
 }
 
